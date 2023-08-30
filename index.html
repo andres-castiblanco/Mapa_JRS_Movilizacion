@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Localidad_3.js"></script>
+        <script src="data/JRS_2019_4.js"></script>
+        <script src="data/Areas_MC_5.js"></script>
+        <script src="data/Servicios_MC_6.js"></script>
+        <script src="data/Portal_Trasmilenio_7.js"></script>
+        <script src="data/Troncal_Trasmilenio_8.js"></script>
+        <script src="data/Estacion_Trasmilenio_9.js"></script>
+        <script src="data/Estacion_Trasmilenio_Julian_10.js"></script>
+        <script src="data/Centros_Comerciales_11.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[4.436032722740505,-74.38067702460194],[4.855726376330803,-73.77178468978032]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleMaps_0');
+        map.getPane('pane_GoogleMaps_0').style.zIndex = 400;
+        var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleMaps_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleMaps_0;
+        map.addLayer(layer_GoogleMaps_0);
+        map.createPane('pane_GoogleTraffic_1');
+        map.getPane('pane_GoogleTraffic_1').style.zIndex = 401;
+        var layer_GoogleTraffic_1 = L.tileLayer('https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleTraffic_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleTraffic_1;
+        map.createPane('pane_Mapa_Calor_2');
+        map.getPane('pane_Mapa_Calor_2').style.zIndex = 402;
+        var img_Mapa_Calor_2 = 'data/Mapa_Calor_2.png';
+        var img_bounds_Mapa_Calor_2 = [[3.7317292561930673,-74.44908128883371],[4.83677905642036,-73.98653475333421]];
+        var layer_Mapa_Calor_2 = new L.imageOverlay(img_Mapa_Calor_2,
+                                              img_bounds_Mapa_Calor_2,
+                                              {pane: 'pane_Mapa_Calor_2'});
+        bounds_group.addLayer(layer_Mapa_Calor_2);
+        function pop_Localidad_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Identificador unico de la localidad</th>\
+                        <td>' + (feature.properties['LOCCODIGO'] !== null ? autolinker.link(feature.properties['LOCCODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nombre de la localidad</th>\
+                        <td>' + (feature.properties['LOCNOMBRE'] !== null ? autolinker.link(feature.properties['LOCNOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Localidad_3_0() {
+            return {
+                pane: 'pane_Localidad_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Localidad_3');
+        map.getPane('pane_Localidad_3').style.zIndex = 403;
+        map.getPane('pane_Localidad_3').style['mix-blend-mode'] = 'normal';
+        var layer_Localidad_3 = new L.geoJson(json_Localidad_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Localidad_3',
+            layerName: 'layer_Localidad_3',
+            pane: 'pane_Localidad_3',
+            onEachFeature: pop_Localidad_3,
+            style: style_Localidad_3_0,
+        });
+        bounds_group.addLayer(layer_Localidad_3);
+        map.addLayer(layer_Localidad_3);
+        function pop_JRS_2019_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>ID_2019</strong><br />' + (feature.properties['ID_2019'] !== null ? autolinker.link(feature.properties['ID_2019'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>ID_Loc</strong><br />' + (feature.properties['ID_Loc'] !== null ? autolinker.link(feature.properties['ID_Loc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Localidad</strong><br />' + (feature.properties['Localidad'] !== null ? autolinker.link(feature.properties['Localidad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Puesto</strong><br />' + (feature.properties['Puesto'] !== null ? autolinker.link(feature.properties['Puesto'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Nombre</strong><br />' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Lugar</strong><br />' + (feature.properties['Lugar'] !== null ? autolinker.link(feature.properties['Lugar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Direccion</strong><br />' + (feature.properties['Direccion'] !== null ? autolinker.link(feature.properties['Direccion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Mesas</strong><br />' + (feature.properties['Mesas'] !== null ? autolinker.link(feature.properties['Mesas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>PARTIDO VE</strong><br />' + (feature.properties['PARTIDO VE'] !== null ? autolinker.link(feature.properties['PARTIDO VE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>JULIAN DAV</strong><br />' + (feature.properties['JULIAN DAV'] !== null ? autolinker.link(feature.properties['JULIAN DAV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>VOTOS EN B</strong><br />' + (feature.properties['VOTOS EN B'] !== null ? autolinker.link(feature.properties['VOTOS EN B'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>VOTOS NULO</strong><br />' + (feature.properties['VOTOS NULO'] !== null ? autolinker.link(feature.properties['VOTOS NULO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>VOTOS NO M</strong><br />' + (feature.properties['VOTOS NO M'] !== null ? autolinker.link(feature.properties['VOTOS NO M'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_JRS_2019_4_0(feature) {
+            if (feature.properties['JULIAN DAV'] >= 1.000000 && feature.properties['JULIAN DAV'] <= 47.400000 ) {
+                return {
+                pane: 'pane_JRS_2019_4',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['JULIAN DAV'] >= 47.400000 && feature.properties['JULIAN DAV'] <= 93.800000 ) {
+                return {
+                pane: 'pane_JRS_2019_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,234,194,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['JULIAN DAV'] >= 93.800000 && feature.properties['JULIAN DAV'] <= 140.200000 ) {
+                return {
+                pane: 'pane_JRS_2019_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,199,124,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['JULIAN DAV'] >= 140.200000 && feature.properties['JULIAN DAV'] <= 186.600000 ) {
+                return {
+                pane: 'pane_JRS_2019_4',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(42,146,75,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['JULIAN DAV'] >= 186.600000 && feature.properties['JULIAN DAV'] <= 233.000000 ) {
+                return {
+                pane: 'pane_JRS_2019_4',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_JRS_2019_4');
+        map.getPane('pane_JRS_2019_4').style.zIndex = 404;
+        map.getPane('pane_JRS_2019_4').style['mix-blend-mode'] = 'normal';
+        var layer_JRS_2019_4 = new L.geoJson(json_JRS_2019_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JRS_2019_4',
+            layerName: 'layer_JRS_2019_4',
+            pane: 'pane_JRS_2019_4',
+            onEachFeature: pop_JRS_2019_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_JRS_2019_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_JRS_2019_4);
+        function pop_Areas_MC_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">UPL</th>\
+                        <td>' + (feature.properties['UPL'] !== null ? autolinker.link(feature.properties['UPL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        var pattern_Areas_MC_5_0 = new L.StripePattern({
+            weight: 0.3,
+            spaceWeight: 2.0,
+            color: '#fb9a99',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 315
+        });
+        pattern_Areas_MC_5_0.addTo(map);
+        function style_Areas_MC_5_0() {
+            return {
+                pane: 'pane_Areas_MC_5',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_Areas_MC_5_0,
+                interactive: true,
+            }
+        }
+        function style_Areas_MC_5_1() {
+            return {
+                pane: 'pane_Areas_MC_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Areas_MC_5');
+        map.getPane('pane_Areas_MC_5').style.zIndex = 405;
+        map.getPane('pane_Areas_MC_5').style['mix-blend-mode'] = 'normal';
+        var layer_Areas_MC_5 = new L.geoJson.multiStyle(json_Areas_MC_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Areas_MC_5',
+            layerName: 'layer_Areas_MC_5',
+            pane: 'pane_Areas_MC_5',
+            onEachFeature: pop_Areas_MC_5,
+            styles: [style_Areas_MC_5_0,style_Areas_MC_5_1,]
+        });
+        bounds_group.addLayer(layer_Areas_MC_5);
+        function pop_Servicios_MC_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Servicio</th>\
+                        <td>' + (feature.properties['Servicio'] !== null ? autolinker.link(feature.properties['Servicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Servicios_MC_6_0() {
+            return {
+                pane: 'pane_Servicios_MC_6',
+                shape: 'diamond',
+                radius: 8.8,
+                opacity: 1,
+                color: 'rgba(128,17,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,154,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Servicios_MC_6');
+        map.getPane('pane_Servicios_MC_6').style.zIndex = 406;
+        map.getPane('pane_Servicios_MC_6').style['mix-blend-mode'] = 'normal';
+        var layer_Servicios_MC_6 = new L.geoJson(json_Servicios_MC_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Servicios_MC_6',
+            layerName: 'layer_Servicios_MC_6',
+            pane: 'pane_Servicios_MC_6',
+            onEachFeature: pop_Servicios_MC_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Servicios_MC_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Servicios_MC_6);
+        function pop_Portal_Trasmilenio_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nombre Estación</th>\
+                        <td>' + (feature.properties['ETRNOMBRE'] !== null ? autolinker.link(feature.properties['ETRNOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Troncal Estación</th>\
+                        <td>' + (feature.properties['ETRTESTAC'] !== null ? autolinker.link(feature.properties['ETRTESTAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Portal_Trasmilenio_7_0(feature) {
+            switch(String(feature.properties['ETRNOMBRE'])) {
+                case 'Portal 20 de Julio':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(100,233,162,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal de la 80':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(66,16,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal de las Américas':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,13,118,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal de Suba':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,213,14,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal del Sur':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(80,126,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal El Dorado':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(150,130,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal Norte':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(140,219,128,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal Tunal':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,168,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Portal Usme':
+                    return {
+                pane: 'pane_Portal_Trasmilenio_7',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,127,0,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Portal_Trasmilenio_7');
+        map.getPane('pane_Portal_Trasmilenio_7').style.zIndex = 407;
+        map.getPane('pane_Portal_Trasmilenio_7').style['mix-blend-mode'] = 'normal';
+        var layer_Portal_Trasmilenio_7 = new L.geoJson(json_Portal_Trasmilenio_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Portal_Trasmilenio_7',
+            layerName: 'layer_Portal_Trasmilenio_7',
+            pane: 'pane_Portal_Trasmilenio_7',
+            onEachFeature: pop_Portal_Trasmilenio_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Portal_Trasmilenio_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Portal_Trasmilenio_7);
+        map.addLayer(layer_Portal_Trasmilenio_7);
+        function pop_Troncal_Trasmilenio_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nombre Troncal de Transmilenio</th>\
+                        <td>' + (feature.properties['TTRATRONCA'] !== null ? autolinker.link(feature.properties['TTRATRONCA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Código Troncal Transmilenio</th>\
+                        <td>' + (feature.properties['TTRACTTRAN'] !== null ? autolinker.link(feature.properties['TTRACTTRAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Troncal_Trasmilenio_8_0(feature) {
+            switch(String(feature.properties['TTRACTTRAN'])) {
+                case 'A':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(32,65,124,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'B':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(121,193,66,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'C':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(253,187,46,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'D':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(170,127,205,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'E':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(171,101,12,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'F':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(229,26,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'G':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(0,165,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'H':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(246,137,31,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'J':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(221,155,165,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'K':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(206,170,120,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'L':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(0,169,167,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'M':
+                    return {
+                pane: 'pane_Troncal_Trasmilenio_8',
+                opacity: 1,
+                color: 'rgba(169,0,230,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Troncal_Trasmilenio_8');
+        map.getPane('pane_Troncal_Trasmilenio_8').style.zIndex = 408;
+        map.getPane('pane_Troncal_Trasmilenio_8').style['mix-blend-mode'] = 'normal';
+        var layer_Troncal_Trasmilenio_8 = new L.geoJson(json_Troncal_Trasmilenio_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Troncal_Trasmilenio_8',
+            layerName: 'layer_Troncal_Trasmilenio_8',
+            pane: 'pane_Troncal_Trasmilenio_8',
+            onEachFeature: pop_Troncal_Trasmilenio_8,
+            style: style_Troncal_Trasmilenio_8_0,
+        });
+        bounds_group.addLayer(layer_Troncal_Trasmilenio_8);
+        map.addLayer(layer_Troncal_Trasmilenio_8);
+        function pop_Estacion_Trasmilenio_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nombre Estación</th>\
+                        <td>' + (feature.properties['ETRNOMBRE'] !== null ? autolinker.link(feature.properties['ETRNOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Troncal Estación</th>\
+                        <td>' + (feature.properties['ETRTESTAC'] !== null ? autolinker.link(feature.properties['ETRTESTAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Estacion_Trasmilenio_9_0() {
+            return {
+                pane: 'pane_Estacion_Trasmilenio_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Estacion_Trasmilenio_9');
+        map.getPane('pane_Estacion_Trasmilenio_9').style.zIndex = 409;
+        map.getPane('pane_Estacion_Trasmilenio_9').style['mix-blend-mode'] = 'normal';
+        var layer_Estacion_Trasmilenio_9 = new L.geoJson(json_Estacion_Trasmilenio_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Estacion_Trasmilenio_9',
+            layerName: 'layer_Estacion_Trasmilenio_9',
+            pane: 'pane_Estacion_Trasmilenio_9',
+            onEachFeature: pop_Estacion_Trasmilenio_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Estacion_Trasmilenio_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Estacion_Trasmilenio_9);
+        map.addLayer(layer_Estacion_Trasmilenio_9);
+        function pop_Estacion_Trasmilenio_Julian_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ETRNOMBRE</th>\
+                        <td>' + (feature.properties['ETRNOMBRE'] !== null ? autolinker.link(feature.properties['ETRNOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ETRTESTAC</th>\
+                        <td>' + (feature.properties['ETRTESTAC'] !== null ? autolinker.link(feature.properties['ETRTESTAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Estacion_Trasmilenio_Julian_10_0() {
+            return {
+                pane: 'pane_Estacion_Trasmilenio_Julian_10',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Estacion_Trasmilenio_Julian_10');
+        map.getPane('pane_Estacion_Trasmilenio_Julian_10').style.zIndex = 410;
+        map.getPane('pane_Estacion_Trasmilenio_Julian_10').style['mix-blend-mode'] = 'normal';
+        var layer_Estacion_Trasmilenio_Julian_10 = new L.geoJson(json_Estacion_Trasmilenio_Julian_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Estacion_Trasmilenio_Julian_10',
+            layerName: 'layer_Estacion_Trasmilenio_Julian_10',
+            pane: 'pane_Estacion_Trasmilenio_Julian_10',
+            onEachFeature: pop_Estacion_Trasmilenio_Julian_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Estacion_Trasmilenio_Julian_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Estacion_Trasmilenio_Julian_10);
+        map.addLayer(layer_Estacion_Trasmilenio_Julian_10);
+        function pop_Centros_Comerciales_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NGeNombre</th>\
+                        <td>' + (feature.properties['NGeNombre'] !== null ? autolinker.link(feature.properties['NGeNombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Centros_Comerciales_11_0() {
+            return {
+                pane: 'pane_Centros_Comerciales_11',
+                shape: 'diamond',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,123,182,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Centros_Comerciales_11');
+        map.getPane('pane_Centros_Comerciales_11').style.zIndex = 411;
+        map.getPane('pane_Centros_Comerciales_11').style['mix-blend-mode'] = 'normal';
+        var layer_Centros_Comerciales_11 = new L.geoJson(json_Centros_Comerciales_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Centros_Comerciales_11',
+            layerName: 'layer_Centros_Comerciales_11',
+            pane: 'pane_Centros_Comerciales_11',
+            onEachFeature: pop_Centros_Comerciales_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Centros_Comerciales_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Centros_Comerciales_11);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Centros_Comerciales_11.png" /> Centros_Comerciales': layer_Centros_Comerciales_11,'<img src="legend/Estacion_Trasmilenio_Julian_10.png" /> Estacion_Trasmilenio_Julian': layer_Estacion_Trasmilenio_Julian_10,'<img src="legend/Estacion_Trasmilenio_9.png" /> Estacion_Trasmilenio': layer_Estacion_Trasmilenio_9,'Troncal_Trasmilenio<br /><table><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_A0.png" /></td><td>A</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_B1.png" /></td><td>B</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_C2.png" /></td><td>C</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_D3.png" /></td><td>D</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_E4.png" /></td><td>E</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_F5.png" /></td><td>F</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_G6.png" /></td><td>G</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_H7.png" /></td><td>H</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_J8.png" /></td><td>J</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_K9.png" /></td><td>K</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_L10.png" /></td><td>L</td></tr><tr><td style="text-align: center;"><img src="legend/Troncal_Trasmilenio_8_M11.png" /></td><td>M</td></tr></table>': layer_Troncal_Trasmilenio_8,'Portal_Trasmilenio<br /><table><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_Portal20deJulio0.png" /></td><td>Portal 20 de Julio</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_Portaldela801.png" /></td><td>Portal de la 80</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortaldelasAméricas2.png" /></td><td>Portal de las Américas</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortaldeSuba3.png" /></td><td>Portal de Suba</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortaldelSur4.png" /></td><td>Portal del Sur</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortalElDorado5.png" /></td><td>Portal El Dorado</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortalNorte6.png" /></td><td>Portal Norte</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortalTunal7.png" /></td><td>Portal Tunal</td></tr><tr><td style="text-align: center;"><img src="legend/Portal_Trasmilenio_7_PortalUsme8.png" /></td><td>Portal Usme</td></tr></table>': layer_Portal_Trasmilenio_7,'<img src="legend/Servicios_MC_6.png" /> Servicios_MC': layer_Servicios_MC_6,'<img src="legend/Areas_MC_5.png" /> Areas_MC': layer_Areas_MC_5,'JRS_2019<br /><table><tr><td style="text-align: center;"><img src="legend/JRS_2019_4_1470.png" /></td><td>1 - 47</td></tr><tr><td style="text-align: center;"><img src="legend/JRS_2019_4_47941.png" /></td><td>47 - 94</td></tr><tr><td style="text-align: center;"><img src="legend/JRS_2019_4_941402.png" /></td><td>94 - 140</td></tr><tr><td style="text-align: center;"><img src="legend/JRS_2019_4_1401873.png" /></td><td>140 - 187</td></tr><tr><td style="text-align: center;"><img src="legend/JRS_2019_4_1872334.png" /></td><td>187 - 233</td></tr></table>': layer_JRS_2019_4,'<img src="legend/Localidad_3.png" /> Localidad': layer_Localidad_3,"Mapa_Calor": layer_Mapa_Calor_2,"Google Traffic": layer_GoogleTraffic_1,"Google Maps": layer_GoogleMaps_0,}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_JRS_2019_4,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Nombre'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
